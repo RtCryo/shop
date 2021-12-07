@@ -15,6 +15,7 @@ public class Product {
     private long id;
     private String productName;
     private int valueInStock;
+    private int price;
     private String description;
     private String imgName;
     @OneToOne
