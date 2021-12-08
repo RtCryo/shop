@@ -22,4 +22,8 @@ public class ProductService {
     public Product findProduct(Long id){
         return productDAO.findProductById(id);
     }
+
+    public List<Product> findAll(){
+        return (List<Product>) productDAO.findAll();
+    }
 }
