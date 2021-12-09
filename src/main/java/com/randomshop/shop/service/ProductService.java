@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.List;
 
 @Data
@@ -26,4 +27,12 @@ public class ProductService {
     public List<Product> findAll(){
         return (List<Product>) productDAO.findAll();
     }
+
+    public void deleteProduct(Product product) { productDAO.delete(product); }
+
+    public void productsToDelete(List<Product> products) { productDAO.deleteAll(products); }
+
+    public void productToSave(Product product) { productDAO.save(product); }
+
 }
+
