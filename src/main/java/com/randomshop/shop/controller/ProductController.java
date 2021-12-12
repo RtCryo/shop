@@ -17,7 +17,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public @ResponseBody ResponseEntity<Product> productPage(
             @PathVariable("id") Long id) {
-        return new ResponseEntity<>(productService.findProduct(id), HttpStatus.OK);
+        Product response = productService.findProduct(id);
+        if(response == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

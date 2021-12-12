@@ -1,0 +1,48 @@
+{
+  "properties": [
+    {
+      "name": "storage.url",
+      "type": "java.lang.String",
+      "description": "Description for storage.url."
+    },
+    {
+      "name": "site.deliveryInfo",
+      "type": "java.lang.String",
+      "description": "Description for site.deliveryInfo."
+    },
+    {
+      "name": "site.siteName",
+      "type": "java.lang.String",
+      "description": "Description for site.siteName."
+    },
+    {
+      "name": "site.email",
+      "type": "java.lang.String",
+      "description": "Description for site.email."
+    },
+    {
+      "name": "site.info1",
+      "type": "java.lang.String",
+      "description": "Description for site.info1."
+    },
+    {
+      "name": "site.info2",
+      "type": "java.lang.String",
+      "description": "Description for site.info2."
+    },
+    {
+      "name": "site.info3",
+      "type": "java.lang.String",
+      "description": "Description for site.info3."
+    },
+    {
+      "name": "site.imgLogoName",
+      "type": "java.lang.String",
+      "description": "Description for site.imgLogoName."
+    },
+    {
+      "name": "site.banner",
+      "type": "java.lang.String",
+      "description": "Description for site.banner."
+    }
+  ] }
