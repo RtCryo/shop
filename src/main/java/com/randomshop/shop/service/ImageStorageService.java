@@ -16,8 +16,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ImageStorageService{
 
-    private final Path root = Paths.get("D:/shop/src/assets/img_product");
-    private final Path site = Paths.get("D:/shop/src/assets/img");
+    private final Path root = Paths.get("J:/shop/src/assets/img_product");
+    private final Path site = Paths.get("J:/shop/src/assets/img");
     private final Random random = new Random();
 
     public void init() {

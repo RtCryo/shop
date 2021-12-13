@@ -1,11 +1,11 @@
 package com.randomshop.shop.DTO;
 
 import com.randomshop.shop.model.Category;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductDTO {
 
     private long id;
