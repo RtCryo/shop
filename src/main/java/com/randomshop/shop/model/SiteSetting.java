@@ -1,5 +1,6 @@
 package com.randomshop.shop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class SiteSetting {
 
     @Id

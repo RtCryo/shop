@@ -16,7 +16,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ImageStorageService{
 
-    private final Path root = Paths.get("J:/shop/src/assets/img_product");
+    private final Path root = Paths.get("D:/shop/src/assets/img_product");
+    private final Path site = Paths.get("D:/shop/src/assets/img");
     private final Random random = new Random();
 
     public void init() {
@@ -27,12 +28,30 @@ public class ImageStorageService{
                 throw new RuntimeException("Could not initialize folder for upload!");
             }
         }
+        if(!Files.isDirectory(site)){
+            try {
+                Files.createDirectory(site);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not initialize folder for upload!");
+            }
+        }
     }
 
     public String save(MultipartFile file) {
         String imgName = (getRandomString() + LocalDateTime.now() + "_" + file.getOriginalFilename()).replace(":", "_");
         try {
             Files.copy(file.getInputStream(), this.root.resolve(imgName),
+                    StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+        }
+        return imgName;
+    }
+
+    public String saveSiteImg(MultipartFile file) {
+        String imgName = (getRandomString() + LocalDateTime.now() + "_" + file.getOriginalFilename()).replace(":", "_");
+        try {
+            Files.copy(file.getInputStream(), this.site.resolve(imgName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
