@@ -1,5 +1,6 @@
 package com.randomshop.shop.DAO;
 
+import com.randomshop.shop.model.Banner;
 import com.randomshop.shop.model.SiteSetting;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,6 @@ public interface SiteSettingsDAO extends PagingAndSortingRepository<SiteSetting,
                         @Param(value = "info2") String info2,
                         @Param(value = "info3") String info3,
                         @Param(value = "imgLogoName") String imgLogoName,
-                        @Param(value = "banner") List<String> banner);
+                        @Param(value = "banner") List<Banner> banner);
 
 }

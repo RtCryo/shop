@@ -1,12 +1,13 @@
 package com.randomshop.shop.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
@@ -14,23 +15,26 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
+@ConfigurationProperties("test")
 public class ImageStorageService{
 
-    private final Path root = Paths.get("C:/repo/UI-shop/src/assets/img_product");
-    private final Path site = Paths.get("C:/repo/UI-shop/src/assets/img");
+    @Setter
+    private String root;
+    @Setter
+    private String site;
     private final Random random = new Random();
 
     public void init() {
-        if(!Files.isDirectory(root)){
+        if(!Files.isDirectory(Paths.get(root))){
             try {
-                Files.createDirectory(root);
+                Files.createDirectory(Paths.get(root));
             } catch (IOException e) {
                 throw new RuntimeException("Could not initialize folder for upload!");
             }
         }
-        if(!Files.isDirectory(site)){
+        if(!Files.isDirectory(Paths.get(site))){
             try {
-                Files.createDirectory(site);
+                Files.createDirectory(Paths.get(site));
             } catch (IOException e) {
                 throw new RuntimeException("Could not initialize folder for upload!");
             }
@@ -40,7 +44,7 @@ public class ImageStorageService{
     public String save(MultipartFile file) {
         String imgName = (getRandomString() + LocalDateTime.now() + "_" + file.getOriginalFilename()).replace(":", "_");
         try {
-            Files.copy(file.getInputStream(), this.root.resolve(imgName),
+            Files.copy(file.getInputStream(), Paths.get(this.root).resolve(imgName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
@@ -51,7 +55,7 @@ public class ImageStorageService{
     public String saveSiteImg(MultipartFile file) {
         String imgName = (getRandomString() + LocalDateTime.now() + "_" + file.getOriginalFilename()).replace(":", "_");
         try {
-            Files.copy(file.getInputStream(), this.site.resolve(imgName),
+            Files.copy(file.getInputStream(), Paths.get(this.site).resolve(imgName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
@@ -64,7 +68,7 @@ public class ImageStorageService{
         assert ori != null;
         String imgName = "logo".concat(ori.substring(ori.lastIndexOf(".")));
         try {
-            Files.copy(file.getInputStream(), this.site.resolve(imgName),
+            Files.copy(file.getInputStream(), Paths.get(this.site).resolve(imgName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
@@ -74,7 +78,7 @@ public class ImageStorageService{
 
     public void deleteFile(String fileName){
         try {
-            Files.delete(this.root.resolve(fileName));
+            Files.delete(Paths.get(this.root).resolve(fileName));
         } catch (IOException e) {
             throw new RuntimeException("Could not delete the file. Error: " + e.getMessage());
         }

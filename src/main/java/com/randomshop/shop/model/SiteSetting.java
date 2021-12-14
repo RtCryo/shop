@@ -23,8 +23,7 @@ public class SiteSetting {
     private String info2;
     private String info3;
     private String imgLogoName;
-    @ElementCollection
-    @CollectionTable(joinColumns = @JoinColumn(name="banner_id"))
-    private List<String> banner;
+    @OneToMany(targetEntity = Banner.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "id")
+    private List<Banner> banner;
 
 }
