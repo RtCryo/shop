@@ -105,8 +105,9 @@ public class AdminController {
     }
 
     @PostMapping("/updateSettings")
-    public ResponseEntity<SiteSetting> updateSettings(SiteSettingDTO siteSetting){
-        return new ResponseEntity<>(siteService.updateSiteSettings(siteSetting), HttpStatus.OK);
+    public ResponseEntity<HttpStatus> updateSettings(@RequestBody SiteSettingDTO siteSetting){
+        siteService.updateSiteSettings(siteSetting);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/imgSiteToSave")
@@ -114,6 +115,18 @@ public class AdminController {
         String message;
         try {
             message = imageStorageService.saveSiteImg(file);
+            return ResponseEntity.status(HttpStatus.OK).body(new MessageDTO(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageDTO(message));
+        }
+    }
+
+    @PostMapping("/logoToSave")
+    public ResponseEntity<MessageDTO> logoToSave(@RequestParam("file") MultipartFile file){
+        String message;
+        try {
+            message = imageStorageService.saveSiteLogo(file);
             return ResponseEntity.status(HttpStatus.OK).body(new MessageDTO(message));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";

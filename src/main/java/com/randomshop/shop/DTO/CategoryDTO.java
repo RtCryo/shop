@@ -1,10 +1,11 @@
 package com.randomshop.shop.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CategoryDTO {
     private long id;
     private String categoryName;

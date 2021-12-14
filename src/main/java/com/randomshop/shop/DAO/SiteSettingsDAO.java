@@ -12,12 +12,10 @@ import java.util.List;
 @Transactional
 public interface SiteSettingsDAO extends PagingAndSortingRepository<SiteSetting, Long> {
 
-    SiteSetting findSiteSettingById(long id);
-
     @Modifying
     @Query("update SiteSetting u set u.siteName = :siteName, u.email = :email, u.deliveryInfo = :deliveryInfo, " +
             "u.info1 = :info1, u.info2 = :info2, u.info3 = :info3, u.imgLogoName = :imgLogoName, u.banner = :banner where u.id = :id")
-    SiteSetting updateSiteSettings(@Param(value = "id") long id,
+    void updateSiteSettings(@Param(value = "id") long id,
                         @Param(value = "siteName") String siteName,
                         @Param(value = "email") String email,
                         @Param(value = "deliveryInfo") String deliveryInfo,

@@ -26,28 +26,29 @@ public class SiteService {
         return siteSetting.get(0);
     }
 
-    public SiteSetting updateSiteSettings(SiteSettingDTO siteSetting){
+    public void updateSiteSettings(SiteSettingDTO siteSetting){
         SiteSetting siteSettingToUpdate = dtoToModel(siteSetting);
-        return siteSettingsDAO.updateSiteSettings(siteSettingToUpdate.getId(), siteSettingToUpdate.getSiteName(), siteSettingToUpdate.getEmail(),
+        siteSettingsDAO.updateSiteSettings(siteSettingToUpdate.getId(), siteSettingToUpdate.getSiteName(), siteSettingToUpdate.getEmail(),
                 siteSettingToUpdate.getDeliveryInfo(), siteSettingToUpdate.getInfo1(), siteSettingToUpdate.getInfo2(), siteSettingToUpdate.getInfo3(),
-                siteSettingToUpdate.getImgLogoName(), siteSettingToUpdate.getBanner());
+                siteSettingToUpdate.getImgLogoName(),siteSettingToUpdate.getBanner());
     }
 
     public void createSiteSetting(){
         SiteSetting siteSetting = new SiteSetting();
         siteSetting.setBanner(new ArrayList<>());
-        siteSetting.setDeliveryInfo("");
-        siteSetting.setEmail("");
-        siteSetting.setImgLogoName("");
-        siteSetting.setInfo1("");
-        siteSetting.setInfo2("");
-        siteSetting.setInfo3("");
-        siteSetting.setSiteName("");
+        siteSetting.setDeliveryInfo("DeliveryInfoTest!");
+        siteSetting.setEmail("email@test.com");
+        siteSetting.setImgLogoName("logo.png");
+        siteSetting.setInfo1("info1test");
+        siteSetting.setInfo2("info2test");
+        siteSetting.setInfo3("info3test");
+        siteSetting.setSiteName("siteNameTest");
         siteSettingsDAO.save(siteSetting);
     }
 
     private SiteSetting dtoToModel(SiteSettingDTO siteSettingDTO) {
         SiteSetting siteSetting = new SiteSetting();
+        siteSetting.setId(siteSettingDTO.getId());
         siteSetting.setSiteName(siteSettingDTO.getSiteName());
         siteSetting.setEmail(siteSettingDTO.getEmail());
         siteSetting.setDeliveryInfo(siteSettingDTO.getDeliveryInfo());

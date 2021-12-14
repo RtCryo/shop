@@ -1,12 +1,12 @@
 package com.randomshop.shop.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SiteSettingDTO {
 
     private long id;

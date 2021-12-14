@@ -16,8 +16,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ImageStorageService{
 
-    private final Path root = Paths.get("J:/shop/src/assets/img_product");
-    private final Path site = Paths.get("J:/shop/src/assets/img");
+    private final Path root = Paths.get("C:/repo/UI-shop/src/assets/img_product");
+    private final Path site = Paths.get("C:/repo/UI-shop/src/assets/img");
     private final Random random = new Random();
 
     public void init() {
@@ -50,6 +50,19 @@ public class ImageStorageService{
 
     public String saveSiteImg(MultipartFile file) {
         String imgName = (getRandomString() + LocalDateTime.now() + "_" + file.getOriginalFilename()).replace(":", "_");
+        try {
+            Files.copy(file.getInputStream(), this.site.resolve(imgName),
+                    StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+        }
+        return imgName;
+    }
+
+    public String saveSiteLogo(MultipartFile file) {
+        String ori = file.getOriginalFilename();
+        assert ori != null;
+        String imgName = "logo".concat(ori.substring(ori.lastIndexOf(".")));
         try {
             Files.copy(file.getInputStream(), this.site.resolve(imgName),
                     StandardCopyOption.REPLACE_EXISTING);

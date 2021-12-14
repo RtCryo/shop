@@ -2,15 +2,15 @@ package com.randomshop.shop.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class SiteSetting {
 
     @Id
@@ -24,6 +24,7 @@ public class SiteSetting {
     private String info3;
     private String imgLogoName;
     @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name="banner_id"))
     private List<String> banner;
 
 }
