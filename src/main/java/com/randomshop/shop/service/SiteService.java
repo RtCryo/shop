@@ -1,9 +1,7 @@
 package com.randomshop.shop.service;
 
 import com.randomshop.shop.DAO.SiteSettingsDAO;
-import com.randomshop.shop.DTO.BannerDTO;
 import com.randomshop.shop.DTO.SiteSettingDTO;
-import com.randomshop.shop.model.Banner;
 import com.randomshop.shop.model.SiteSetting;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @RequiredArgsConstructor
@@ -29,22 +26,19 @@ public class SiteService {
         return siteSetting.get(0);
     }
 
-    public void updateSiteSettings(SiteSettingDTO siteSetting){
-        Optional<SiteSetting> setting = siteSettingsDAO.findById(siteSetting.getId());
-        SiteSetting siteSetting2 = setting.map(siteSetting1 -> {
-            siteSetting1.setSiteName(siteSetting.getSiteName());
-            return siteSetting1;
-        }).orElse(dtoToModel(siteSetting));
-        siteSettingsDAO.save(siteSetting2);
-//        SiteSetting siteSettingToUpdate = dtoToModel(siteSetting);
-//        if(siteSettingToUpdate.getBanner() == null){
-//            List<Banner> list = new ArrayList<>();
-//            list.add(new Banner());
-//            siteSettingToUpdate.setBanner(new ArrayList<>());
-//        }
-//        siteSettingsDAO.updateSiteSettings(siteSettingToUpdate.getId(), siteSettingToUpdate.getSiteName(), siteSettingToUpdate.getEmail(),
-//                siteSettingToUpdate.getDeliveryInfo(), siteSettingToUpdate.getInfo1(), siteSettingToUpdate.getInfo2(), siteSettingToUpdate.getInfo3(),
-//                siteSettingToUpdate.getImgLogoName(),siteSettingToUpdate.getBanner());
+    public void updateSiteSettings(SiteSettingDTO siteSettingDTO){
+        SiteSetting newSiteSetting = siteSettingsDAO.findById(siteSettingDTO.getId()).map(setting -> {
+            setting.setSiteName(siteSettingDTO.getSiteName());
+            setting.setInfo1(siteSettingDTO.getInfo1());
+            setting.setInfo2(siteSettingDTO.getInfo2());
+            setting.setInfo3(siteSettingDTO.getInfo3());
+            setting.setImgLogoName(siteSettingDTO.getImgLogoName());
+            setting.setEmail(siteSettingDTO.getEmail());
+            setting.setDeliveryInfo(siteSettingDTO.getDeliveryInfo());
+            setting.setBanner(siteSettingDTO.getBanner());
+            return setting;
+        }).orElse(dtoToModel(siteSettingDTO));
+        siteSettingsDAO.save(newSiteSetting);
     }
 
     public void createSiteSetting(){
@@ -70,16 +64,8 @@ public class SiteService {
         siteSetting.setInfo2(siteSettingDTO.getInfo2());
         siteSetting.setInfo3(siteSettingDTO.getInfo3());
         siteSetting.setImgLogoName(siteSettingDTO.getImgLogoName());
-        siteSetting.setBanner(bannerDtoToModel(siteSettingDTO.getBanner()));
+        siteSetting.setBanner(siteSettingDTO.getBanner());
         return siteSetting;
-    }
-
-    private List<Banner> bannerDtoToModel(List<BannerDTO> bannerDTOS){
-        List<Banner> banner = new ArrayList<>();
-        for(BannerDTO t : bannerDTOS){
-            banner.add(new Banner(t.getId(),t.getBannerName()));
-        }
-        return banner;
     }
 
 }

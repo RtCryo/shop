@@ -17,6 +17,6 @@ public class SiteSettingDTO {
     private String info2;
     private String info3;
     private String imgLogoName;
-    private List<BannerDTO> banner;
+    private List<String> banner;
 
 }
