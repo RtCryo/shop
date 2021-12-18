@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,6 +27,7 @@ public class ImageStorageService{
     private String site;
     private final Random random = new Random();
 
+    @PostConstruct
     public void init() {
         if(!Files.isDirectory(Paths.get(root))){
             try {

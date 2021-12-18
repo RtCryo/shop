@@ -6,7 +6,6 @@ import com.randomshop.shop.DTO.ProductDTO;
 import com.randomshop.shop.DTO.SiteSettingDTO;
 import com.randomshop.shop.model.Category;
 import com.randomshop.shop.model.Product;
-import com.randomshop.shop.model.SiteSetting;
 import com.randomshop.shop.service.CategoryService;
 import com.randomshop.shop.service.ImageStorageService;
 import com.randomshop.shop.service.ProductService;
@@ -14,6 +13,7 @@ import com.randomshop.shop.service.SiteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +21,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@PreAuthorize("hasAuthority('developers:write')")
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -99,11 +100,6 @@ public class AdminController {
     /////Admin category >
 
     /////Site settings
-    @GetMapping("/settings")
-    public ResponseEntity<SiteSetting> settings(){
-        return new ResponseEntity<>(siteService.getSettings(), HttpStatus.OK);
-    }
-
     @PostMapping("/updateSettings")
     public ResponseEntity<HttpStatus> updateSettings(@RequestBody SiteSettingDTO siteSetting){
         siteService.updateSiteSettings(siteSetting);
