@@ -37,8 +37,12 @@ public class CategoryService {
         categoryDAO.save(dtoToModel(category));
     }
 
-    public void categoryToUpdate(CategoryDTO category) {
-        categoryDAO.updateCategory(category.getId(), category.getCategoryName());
+    public void categoryToUpdate(CategoryDTO categoryDTO) {
+        Category newCategory = categoryDAO.findById(categoryDTO.getId()).map(category -> {
+            category.setCategoryName(categoryDTO.getCategoryName());
+            return category;
+        }).orElse(dtoToModel(categoryDTO));
+        categoryDAO.save(newCategory);
     }
 
     private Category dtoToModel(CategoryDTO dto){

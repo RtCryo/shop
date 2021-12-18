@@ -43,9 +43,21 @@ public class ProductService {
         productDAO.save(dtoToModel(product));
     }
 
-    public void productToUpdate(ProductDTO product) {
-        productDAO.updateProduct(product.getId(), product.getProductName(), product.getValueInStock(), product.getPrice(),
-                product.getImgName(), product.getDescription(), product.getCategory());
+    public void productToUpdate(ProductDTO productDTO) {
+        Product newProduct = productDAO.findById(productDTO.getId()).map(product -> {
+            product.setDescription(productDTO.getDescription());
+            product.setCategory(productDTO.getCategory());
+            product.setValueInStock(productDTO.getValueInStock());
+            product.setPrice(productDTO.getPrice());
+            product.setProductName(productDTO.getProductName());
+            product.setImgName(productDTO.getImgName());
+            return product;
+        }).orElse(dtoToModel(productDTO));
+        productDAO.save(newProduct);
+
+
+//        productDAO.updateProduct(product.getId(), product.getProductName(), product.getValueInStock(), product.getPrice(),
+//                product.getImgName(), product.getDescription(), product.getCategory());
     }
 
     private Product dtoToModel(ProductDTO product){
