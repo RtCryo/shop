@@ -1,19 +1,16 @@
 package com.randomshop.shop.controller;
 
-import com.randomshop.shop.DTO.CategoryDTO;
-import com.randomshop.shop.DTO.MessageDTO;
-import com.randomshop.shop.DTO.ProductDTO;
-import com.randomshop.shop.DTO.SiteSettingDTO;
+import com.randomshop.shop.DTO.*;
 import com.randomshop.shop.model.Category;
 import com.randomshop.shop.model.Product;
-import com.randomshop.shop.service.CategoryService;
-import com.randomshop.shop.service.ImageStorageService;
-import com.randomshop.shop.service.ProductService;
-import com.randomshop.shop.service.SiteService;
+import com.randomshop.shop.model.Role;
+import com.randomshop.shop.model.ShopUser;
+import com.randomshop.shop.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +26,16 @@ public class AdminController {
     private final CategoryService categoryService;
     private final ImageStorageService imageStorageService;
     private final SiteService siteService;
+    private final UserService userService;
+
+    @PostMapping
+    public ResponseEntity<Boolean> adminValidation(@RequestBody UserDTO userDTO){
+        ShopUser shopUser = userService.findByEmail(userDTO.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
+        if(shopUser.getRole().equals(Role.ADMIN)){
+            return new ResponseEntity<>(Boolean.TRUE,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.FORBIDDEN);
+    }
 
     ////< Admin product
     @GetMapping("/products")
