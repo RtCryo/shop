@@ -21,7 +21,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@PreAuthorize("hasAuthority('developers:write')")
+@PreAuthorize("hasAuthority('admin:write')")
 @RequestMapping("/admin")
 public class AdminController {
 

@@ -32,13 +32,14 @@ public class AuthenticationController {
     private final JwtTokenService jwtTokenService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<?> authenticate(@RequestBody UserDTO request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
             ShopUser shopUser = userService.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
             String token = jwtTokenService.createToken(request.getEmail(), shopUser.getRole().name());
             Map<Object, Object> response = new HashMap<>();
             response.put("email", request.getEmail());
+            response.put("role", shopUser.getRole());
             response.put("token", token);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (AuthenticationException e) {
@@ -53,11 +54,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public void registration(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> registration(@RequestBody UserDTO userDTO) {
         userService.createUser(userDTO);
-        AuthenticationRequestDTO authenticationRequestDTO = new AuthenticationRequestDTO();
-        authenticationRequestDTO.setEmail(userDTO.getEmail());
-        authenticationRequestDTO.setPassword(userDTO.getPassword());
-        authenticate(authenticationRequestDTO);
+        return authenticate(userDTO);
     }
 }
