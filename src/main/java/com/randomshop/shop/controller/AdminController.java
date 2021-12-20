@@ -136,4 +136,23 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageDTO(message));
         }
     }
+
+    ////////////////////////////
+    ////////////////////////////
+
+    @GetMapping("/findAllUser")
+    public ResponseEntity<List<ShopUser>> findAllUser() {
+        return new ResponseEntity<>(userService.findAllUser(), HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteUser")
+    public ResponseEntity<HttpStatus> deleteUser(UserDTO userDTO) {
+        userService.deleteUser(userDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/updateUser")
+    public ResponseEntity<ShopUser> updateUser(UserDTO userDTO) {
+        return new ResponseEntity<>(userService.updateUser(userDTO),HttpStatus.OK);
+    }
 }
