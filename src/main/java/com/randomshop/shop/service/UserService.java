@@ -28,6 +28,9 @@ public class UserService {
     }
 
     public void createUser(UserDTO userDTO) {
+        userDTO.setRole(Role.USER);
+        userDTO.setStatus(Status.ACTIVE);
+        userDTO.setEnabled(true);
         userDAO.save(dtoToModel(userDTO));
     }
 
@@ -54,7 +57,7 @@ public class UserService {
     private ShopUser dtoToModel(UserDTO userDTO) {
         ShopUser shopUser = new ShopUser();
         shopUser.setEmail(userDTO.getEmail());
-        shopUser.setEnabled(true);
+        shopUser.setEnabled(userDTO.isEnabled());
         shopUser.setName(userDTO.getName());
         shopUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         shopUser.setRole(userDTO.getRole());
