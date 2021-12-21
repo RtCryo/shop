@@ -146,13 +146,13 @@ public class AdminController {
     }
 
     @PostMapping("/deleteUser")
-    public ResponseEntity<HttpStatus> deleteUser(UserDTO userDTO) {
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody UserDTO userDTO) {
         userService.deleteUser(userDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/updateUser")
-    public ResponseEntity<ShopUser> updateUser(UserDTO userDTO) {
+    public ResponseEntity<ShopUser> updateUser(@RequestBody UserDTO userDTO) {
         return new ResponseEntity<>(userService.updateUser(userDTO),HttpStatus.OK);
     }
 }
