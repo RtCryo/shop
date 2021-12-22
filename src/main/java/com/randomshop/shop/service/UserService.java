@@ -48,6 +48,9 @@ public class UserService {
             user.setStatus(userDTO.getStatus());
             user.setRole(userDTO.getRole());
             user.setName(userDTO.getName());
+            user.setAddress(userDTO.getAddress());
+            user.setCart(userDTO.getCart());
+            user.setWishList(userDTO.getWishList());
             return user;
         }).orElse(dtoToModel(userDTO));
         userDAO.save(updUser);
@@ -63,6 +66,9 @@ public class UserService {
         shopUser.setRole(userDTO.getRole());
         shopUser.setStatus(userDTO.getStatus());
         shopUser.setId(userDTO.getId());
+        shopUser.setAddress(userDTO.getAddress());
+        shopUser.setCart(userDTO.getCart());
+        shopUser.setWishList(userDTO.getWishList());
         return shopUser;
     }
 }
