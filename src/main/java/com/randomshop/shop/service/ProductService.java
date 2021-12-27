@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -54,10 +55,14 @@ public class ProductService {
             return product;
         }).orElse(dtoToModel(productDTO));
         productDAO.save(newProduct);
+    }
 
-
-//        productDAO.updateProduct(product.getId(), product.getProductName(), product.getValueInStock(), product.getPrice(),
-//                product.getImgName(), product.getDescription(), product.getCategory());
+    public List<Product> getAllProductsById(List<Long> listId){
+        List<Product> result = new ArrayList<>();
+        for(long id : listId) {
+            result.add(productDAO.findProductById(id));
+        }
+        return result;
     }
 
     private Product dtoToModel(ProductDTO product){

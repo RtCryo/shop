@@ -5,6 +5,7 @@ import com.randomshop.shop.model.Role;
 import com.randomshop.shop.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
     private long id;
     private String name;

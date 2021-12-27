@@ -27,6 +27,16 @@ public class UserService {
         return userDAO.findByEmail(email);
     }
 
+    public UserDTO findUserProfileByEmail(String email){
+        return userDAO.findByEmail(email).map((user) -> {
+            UserDTO dto = new UserDTO();
+            dto.setName(user.getName());
+            dto.setAddress(user.getAddress());
+            dto.setEmail(user.getEmail());
+            return dto;
+        }).orElse( new UserDTO());
+    }
+
     public void createUser(UserDTO userDTO) {
         userDTO.setRole(Role.USER);
         userDTO.setStatus(Status.ACTIVE);
