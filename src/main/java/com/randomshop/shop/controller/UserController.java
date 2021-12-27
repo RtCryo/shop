@@ -18,12 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('user:read')")
 public class UserController {
 
     private final UserService userService;
     private final ProductService productService;
 
+    @PreAuthorize("hasAuthority('user:read')")
     @PostMapping("/updateUser")
     public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDTO userDTO){
         userService.updateUser(userDTO);
@@ -35,6 +35,7 @@ public class UserController {
         return new ResponseEntity<>(productService.getAllProductsById(listId),HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('user:read')")
     @PostMapping("/findUserProfileByEmail")
     public ResponseEntity<UserDTO> userProfileByEmail(@RequestBody String userEmail){
         return new ResponseEntity<>(userService.findUserProfileByEmail(userEmail),HttpStatus.OK);
