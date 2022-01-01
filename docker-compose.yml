@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  spring:
+    image: 'spring:latest'
+    volumes:
+      - imghub:/usr/share/nginx/html/assets
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: app
+    ports:
+        - 8080:8080
+    environment:
+      - spring_datasource_driver-class-name=org.postgresql.Driver
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/shop?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=shop
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - spring_servlet_multipart_max-file-size=500KB
+      - spring_servlet_multipart_max-request-size=500KB
+      - path_root=/usr/share/nginx/html/assets/img_product
+      - path_site=/usr/share/nginx/html/assets/img
+      - token_secretKey=WhoLetTheDogsOut
+      - token_authorizationHeader=Authorization
+      - token_validityInMilliseconds=604800
+  angular:
+    image: 'angular:latest'
+    volumes:
+      - imghub:/usr/share/nginx/html/assets
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: angular
+    ports:
+        - 80:80
+volumes:
+  imghub:

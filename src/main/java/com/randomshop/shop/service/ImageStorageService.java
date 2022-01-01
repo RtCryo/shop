@@ -18,7 +18,7 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-@ConfigurationProperties("test")
+@ConfigurationProperties("path")
 public class ImageStorageService{
 
     @Setter
